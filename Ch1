@@ -1,0 +1,51 @@
+Kernel is a software that controls hardware resources and helps in running of programs.
+Shell/Applications access the kernel via the system call interface.
+Kernel, shell, utilities, libraries, etc together form the OS.
+
+Login information is stored in a specific format, in a particular password file.
+Shell is a command line interpreter. Accessed via terminal or shell script files.
+Examples of shells: Bourne, Korn, C shell, TENEX, bash (used in GNU-Linux), dash, etc.
+Shells are POSIX conformant. Shell type is specified in the password file.
+
+UNIX file system is a tree-like structure, starting from root directory (/).
+ls lists all files in a directory.
+man shows the manual entry for a command.
+cc, gcc, etc. are compilers, which make the executable.
+Predefined functions for UNIX services are present in header files, according to POSIX.
+
+Files accessed by a process are identified using file descriptors (non-negative integers).
+Standard (buffered) input, output, and error, as well as unbuffered i/o all have file descriptors.
+Input/Output/Errors can be redirected to files.
+
+Program is an executable file, Process is a running program.
+Each process has a unique Process ID (non-negative integer) accessed by getpid() function.
+There are 3 primary process control functions: fork, exec, and wait.
+ 'fork' copies a parent process to create a child process. returns pid to parent and 0 to child.
+ 'exec' is a family of different commands. They replace the currently running process with another. 
+ 'wait' suspends the execution of the parent process till the child process is terminated.
+A thread is the set of machine instructions being executed at any given moment.
+Multiple threads of control (parallelism) share the same address space, file descriptors, etc.
+Hence, they need to be synchronised. Threads are identified by Thread IDs (local to process).
+
+Errors are denoted by negative integers, while Success is denoted by zero (return).
+Error numbers are listed in the <errno.h> file. They are returned as values or pointers.
+Functions like perror and strerror help in displaying error messages.
+Errors can be fatal or non-fatal. Fatal errors cannot be recovered; must exit.
+Non-fatal errors are generally recovered by delay and retry.
+
+User ID is stored in the password file. It is unique and cannot be changed.
+User ID 0 is called superuser/root. It has special privileges.
+Group IDs and Supplementary Group IDs are also stored in the password file.
+All these IDs are mapped to names (user-friendly).
+
+Signals notify processes about certain conditions (such as interrupts or hardware exceptions).
+They can result in a default action, a function call ("catching the signal"), or be ignored.
+Signals are 'caught' using the signal() function.
+
+Calendar time is no. of seconds since Epoch. Process time is time taken by CPU to execute a process.
+Process time/CPU time is measured in clock ticks. It can be found using the time command.
+
+Programs request services of the kernel via system calls. They are written in the C language.
+Different user-process functions may invoke the same system call and use it in different ways.
+An application can either make a system call, or call a library routine (which makes system calls).
+Library functions give more elaborate functionality than system calls.
