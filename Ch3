@@ -1,0 +1,35 @@
+5 main file io functions are open, read, write, lseek, close. They are unbuffered.
+However, standard io routines are buffered.
+
+An opened file is identified by the kernel using file descriptors (it is the argument to read/write)
+Standard input, output and error have file descriptor 0, 1, and 2 (shell convention; not in kernel).
+POSIX Standard defines constants for these file descriptors in <unistd.h> for readability.
+
+Files can be created/opened by the open and openat functions. They return the file descriptor (lowest unused).
+Arguments: path, fd, oflag (options), and others.
+oflag can take one or more constant values, as defined in <fcnt1.h> (some are optional).
+fd is for relative pathnames in the openat function, which can open files in directories other than the pwd.
+If any filename is too long, it is truncated or an error is returned.
+
+creat function is a special case of open function (write-only). Now obsolete due to more options in open.
+close function closes files and releases record locks. Runs automatically on process termination.
+[record lock: file can be accessed only by one process]
+
+Every open file has a current file offset (character location in file). It is a long integer (off_t data type).
+lseek function is used to explicitly set the offset of an open file, or to extend its size (creating a hole).
+Arguments: fd, offset (+ve or -ve), and whence (reference for offset). Return value = offset (or -1 for error).
+Can also be used to find the current offset and to check whether the file is capable of seeking.
+Unused bytes of a file are represented by null (\0) character.
+
+read function reads from an open file. write function writes to an open file. (fixed number of bytes).
+Both have arguments fd (file descriptor), buffer pointer, and no. of bytes(which is the return value).
+If no. of bytes != no. of bytes actually read/written, error (-1) is returned.
+Both start at current offset. Later, they increment the offset. [offset: character location in file]
+
+Files can be copied using only read and write functions. Buffer size determines the efficiency.
+Performance is also improved by reading ahead, and by storing the file in cache instead of disk.
+
+Different processes can share one open file. Each open file is represented by 3 data structures:
+	1. file status flags
+	2. current offset
+	3. v-node pointer
