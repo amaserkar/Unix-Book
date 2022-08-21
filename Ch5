@@ -1,0 +1,40 @@
+In the Standard IO library, files are associated with streams
+and not file descriptors. 
+It supports single byte and multibyte streams (orientation).
+
+STDIN STDOUT and STDERR are predefined io streams, with file
+pointers as defined in stdio.h
+
+Standard io is buffered, to minimise the read and write system calls.
+3 types of buffering: Fully buffered, Line buffered, and Unbuffered.
+Standard error is always unbuffered, and regular files are fully buffered.
+Defaults can be changed using the setbuf and setvbuf functions.
+
+fopen() freopen() and fdopen() open a standard I/O stream.
+Permissions are passed as argument flags. File is closed by fclose()
+
+There are 3 types of unformatted IO for read/writing a stream.
+Character-at-a-time (getc,fgetc,getchar), Line-at-a-time (fgets,fputs),
+and Direct/Binary IO (fread,fwrite).
+
+Formatted IO includes printf() and scanf().
+Output is handled by
+printf		stdout
+fprintf		specific stream
+dprintf		file descriptor
+sprintf		appends a null byte (string type)
+snprintf	allows control of buffer size
+Input is handled by scanf, fscanf, sscanf
+
+Format specifiers are used to convert data in character streams 
+(single or multi-byte) to the required data type. 
+
+Operations such as character-at-a-time I/O and line-at-a-time I/O are more
+efficient, because the standard I/O library buffers data in memory.
+Memory Streams are standard io streams that have no underlying files.
+They are used for buffering in main memory, increasing the performance of functions.
+Used instead of temporary files..
+They are well suited for creating strings, because they prevent buffer overflows.
+
+There are disadvantages of the standard io library (eg. inefficiency due to repeated data copying)
+Some alternatives to the standard io library are sfio package, Alloc Stream Interface, etc.
