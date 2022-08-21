@@ -1,0 +1,59 @@
+The four stat functions manipulate a structure stat, which contains
+information about files (attributes). They provide information as follows:
+
+stat	about a named file
+fstat	about the currently open file
+lstat	about a symbolic link
+fstatat	(for relative pathnames)
+
+File type is stored in st_mode
+In addition to regular files and directories, the other file types are
+Block special file: device buffered IO
+Character special file: device unbuffered IO
+FIFO: inter-process communication (pipe)
+Socket: network communication b/w processes
+Symbolic Link: points to another file
+
+File IDs (user and group) are stored in st_uid, st_gid
+File owner and permissions are also in st_mode
+Each file has 9 permission bits.
+
+Rules for ownership of new files and new directories are identical.
+
+Access tests are performed when a file is opened, based on the user and group IDs.
+This is done using the access and faccessat functions (absolute/relative path).
+
+umask() function sets the file mode creation mask for every process.
+Usually, the umask value is set only once after login, and it controls file permissions.
+But the mode creation mask is used whenever a process creates a new file/dir.
+
+File permissions can be changed by the functions chmod, fchmod, fchmodat
+(for specific file/currently open file/relative pathname)
+
+User and Group IDs of a file can be changed by the functions
+chown, fchown, fchownat and lchown
+(for specific file/currently open file/relative pathname/symbolic link)
+
+st_size contains the file size in bytes. It is meaningful only for 
+regular files, directories, and symbolic links.
+
+A regular file can contain 'holes', created by writing after the end of file.
+This affects the file size. (Compare output of ls and du commands.)
+
+Files can be truncated using truncate() and ftruncate()
+
+File systems are present on the partitions of a hard disk. They contain inodes and data blocks.
+inodes contain all the information about a file.
+A directory entry cannot refer to an i-node in a different file system.
+
+A file can have multiple directory entries pointing to its i-node.
+link() or linkat() function can be used to create a link to an existing file.
+To remove an existing directory entry, unlink() is used.
+A file or a directory is renamed with either the rename or renameat functions
+
+A symbolic link is an indirect pointer to a file. It overcomes the limitations
+of hard links, which point directly to the inode of the file.
+Symbolic links are created by the symlink and symlinkat functions.
+They are opened and read by the readlink and readlinkat functions.
+
+
