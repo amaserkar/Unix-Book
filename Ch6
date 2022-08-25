@@ -1,0 +1,40 @@
+Data files such as /etc/passwd and /etc/group are needed for normal operation.
+They should not be ASCII text files (inefficient to scan sequentially).
+They require an interface for applications that may use any file format.
+
+-- Password File (User Database)
+Contains fields of the struct passwd (from pwd.h)
+Encrypted password is not stored here, but in a different file.
+The shell field contains the login shell executable program (default /bin/sh).
+User login can be prevented by keeping /dev/null or /bin/false in the shell field.
+Username nobody (UID 65534) has no privileges, and username root (UID 0) has superuser privileges.
+vipw command can be used to edit the password file.
+Entries can be read using getpwuid(), getpwname() and getpwent().
+Encrypted passwords are user passwords after a one-way encryption algorithm.
+They are stored in a separate file called the shadow password file /etc/shadow
+It must contain the username and encrypted password. It is not readable by most programs.
+
+-- Group File (Group Database)
+Contains fields of struct group (from grp.h)
+Fields are read using getgrgid(), getgrnam(), and getgrent().
+newgrp() is used to change the group ID.
+In addition to the main group ID, a user can belong to upto 16 supplementary groups.
+Supplementary group IDs can be changed by setgroups() and initgroups().
+
+The method of storing user & group information and encrypted passwords depends on the platform.
+
+Other data files are also used, for example /etc/networks and /etc/protocols.
+Interfaces are similar to the password and group files (get, set, and end functions).
+
+utmp and wtmp files keep track of users and logins/logouts, using structures.
+
+uname function is used to return information about the host and OS, from struct utsname.
+gethostname and sethostname functions are also available.
+
+Basic time service (calendar time) in the Unix kernel counts the number of seconds since the Epoch.
+time_t data type (from time.h) contains the time and date, and is returned by the time() function.
+clockid_t type identifies the multiple system clocks; they can be read separately using clock_gettime().
+clock_getres() is used to find the clock resolution.
+Calendar time is usually stored in a structure called broken-down time (human-friendly format).
+This is done by the functions gmtime() and localtime(), while mktime() is the inverse function.
+Time is displayed (with string formatting) using strftime(), and the inverse function is strptime().
