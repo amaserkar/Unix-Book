@@ -1,4 +1,5 @@
 Data files such as /etc/passwd and /etc/group are needed for normal operation.
+They may or may not be ASCII text files. Scanning a file sequentially is inefficient.
 They require an interface for applications that may use any file format.
 
 -- Password File (User Database)
