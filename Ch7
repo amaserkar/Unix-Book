@@ -10,7 +10,7 @@ They take exit status as argument. Returning an integer is the same as exiting w
 
 A process can register functions (exit handlers) to be called upon exit. This is done using atexit().
 They are called in reverse order, then all open streams are closed.
-A program can run only using the exec system call.
+A program can be run only by the exec system call.
 Command line arguments are passed by the program that calls the exec function.
 
 A program is stored in memory in the following segments: Text (instructions), Stack, Heap, and
@@ -18,7 +18,7 @@ Data (initialised and uninitialised). Only the initialised segment and text is s
 The size() command returns the size of all segments.
 
 Common library routines are stored in a single location, which is shared.
-This saves space in the executable files, but increases runtime overhead.
+This saves space in the executable files, but increases runtime overheads.
 The use of shared libraries needs to be indicated, usually with cc and ld commands.
 
 malloc, calloc, realloc functions are used for dynamic memory allocation.
