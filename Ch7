@@ -1,0 +1,44 @@
+Program execution starts with main, which takes 2 parameters:
+no. of args, and array of pointers to args.
+
+Processes terminate in the following ways:
+Normal: return from main, exit functions, and either return or pthread_exit from last thread
+Abnormal: abort call, signal, cancellation request
+
+Exit Functions: _exit() and _Exit() directly return to kernel, while exit() performs cleanup first.
+They take exit status as argument. Returning an integer is the same as exiting with that exit status.
+
+A process can register functions (exit handlers) to be called upon exit. This is done using atexit().
+They are called in reverse order, then all open streams are closed.
+A program can run only using the exec system call.
+Command line arguments are passed by the program that calls the exec function.
+
+A program is stored in memory in the following segments: Text (instructions), Stack, Heap, and
+Data (initialised and uninitialised). Only the initialised segment and text is stored on disk.
+The size() command returns the size of all segments.
+
+Common library routines are stored in a single location, which is shared.
+This saves space in the executable files, but increases runtime overhead.
+The use of shared libraries needs to be indicated, usually with cc and ld commands.
+
+malloc, calloc, realloc functions are used for dynamic memory allocation.
+They return a generic pointer, so casting is not required.
+Extra memory is usually alloted for record keeping. free() is used to clear all the allocated memory.
+Memory allocation routines use the sbrk() system call.
+Possible errors in dynamin memory allocation: freeing a region multiple times, memory leaks,
+writing past the end (corrupting adjacent regions), etc.
+There are alternatives for malloc&free like jemalloc, TCMalloc, libmalloc etc.
+
+A program has an environment list (like the arg list), which is an array of pointers to strings.
+The global variable environ is used for this, which can be passed as the third argument to main function.
+The kernel never accesses the environment strings, but they can be manipulated by applications using the
+getenv() putenv() setenv() and unsetenv() functions.
+
+The goto function cannot be used to move between functions. This can be done by the nonlocal functions:
+setjmp()  - to remember a particular location. Returns 0.
+longjmp() - to go to the location set by setjmp().
+These (non-local branching) functions are useful in exception handling.
+
+A process has resource limits, which are stored using struct rlimit.
+They can be accessed using getrlimit() and setrlimit().
+The resource limits of a parent are inherited by its children.
